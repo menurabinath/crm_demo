@@ -12,7 +12,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-         $customers = Customer::latest()->paginate(10);
+        $customers = Customer::latest()->paginate(10);
         return view('customers.index', compact('customers'));
     }
 
@@ -29,12 +29,20 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:customers',
         ]);
 
-        Customer::create($request->all());
+        Customer::create($request->only([
+            'name',
+            'email',
+            'company',
+            'phone',
+            'address',
+            'status',
+            'notes'
+        ]));
         return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
 
@@ -60,11 +68,26 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:customers,email,'.$customer->id,
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email,' . $customer->id,
+            'company' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:500',
+            'status' => 'required|in:active,inactive',
+            'notes' => 'nullable|string|max:1000',
         ]);
 
-        $customer->update($request->all());
+        // Update only the fields submitted
+        $customer->update($request->only([
+            'name',
+            'email',
+            'company',
+            'phone',
+            'address',
+            'status',
+            'notes'
+        ]));
+
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
