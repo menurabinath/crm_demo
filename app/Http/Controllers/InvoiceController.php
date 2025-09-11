@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -27,7 +28,21 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'proposal_id' => 'nullable|exists:proposals,id',
+            'amount'      => 'required|numeric|min:0',
+            'status'      => 'required|in:pending,paid,failed',
+        ]);
+
+       Invoice::create([
+            'customer_id' => $request->customer_id,
+            'proposal_id' => $request->proposal_id,
+            'amount'      => $request->amount,
+            'status'      => $request->status,
+        ]);
+        
+        return redirect()->route('invoices.index')->with('success', 'Invoice created successfully.');
     }
 
     /**
