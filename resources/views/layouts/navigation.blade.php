@@ -20,15 +20,15 @@
                         {{ __('Customers') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="'#'" :active="false">
+                    <x-nav-link :href="route('proposals.index')" :active="request()->routeIs('proposals.*')">
                         {{ __('Proposals') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="'#'" :active="false">
+                    <x-nav-link :href="route('invoices.index')" :active="request()->routeIs('invoices.*')">
                         {{ __('Invoices') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="'#'" :active="false">
+                    <x-nav-link :href="'transactions.index'" :active="request()->routeIs('transactions.*')">
                         {{ __('Transactions') }}
                     </x-nav-link>
                 </div>

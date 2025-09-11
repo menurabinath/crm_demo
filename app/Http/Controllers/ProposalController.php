@@ -11,8 +11,9 @@ class ProposalController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+        {
+            $proposals = Proposal::with('customer')->get();
+            return view('proposals.index', compact('proposals'));
     }
 
     /**
@@ -20,7 +21,8 @@ class ProposalController extends Controller
      */
     public function create()
     {
-        //
+        $customers = \App\Models\Customer::all();
+        return view('proposals.create', compact('customers'));
     }
 
     /**
@@ -47,32 +49,35 @@ class ProposalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $proposal = \App\Models\Proposal::with('customer')->findOrFail($id);
+        $customers = \App\Models\Customer::all();
+        return view('proposals.edit', compact('proposal', 'customers'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'title'       => 'required|string|max:255',
+            'details'     => 'nullable|string',
+            'status'      => 'required|in:draft,approved,rejected',
+        ]);
+        $proposal = \App\Models\Proposal::findOrFail($id);
+        $proposal->update($request->only([
+            'customer_id',
+            'title',
+            'details',
+            'status',
+        ]));
+        return redirect()->route('proposals.index')->with('success', 'Proposal updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $proposal = \App\Models\Proposal::findOrFail($id);
+        $proposal->delete();
+        return redirect()->route('proposals.index')->with('success', 'Proposal deleted successfully.');
     }
 }
