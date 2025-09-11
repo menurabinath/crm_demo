@@ -18,4 +18,14 @@ class Customer extends Model
         'status',
         'notes',
     ];
+
+    public function proposals()
+    {
+        return $this->hasMany(Proposal::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }
