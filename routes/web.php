@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('proposals', ProposalController::class);
     Route::resource('invoices', InvoiceController::class);
+    Route::resource('transactions', TransactionController::class);
+    Route::get('invoice/{invoice}/checkout', [PaymentController::class, 'checkout'])->name('invoice.checkout');
+    Route::get('invoice/{invoice}/success', [PaymentController::class, 'success'])->name('invoice.success');
 });
 
 Route::resource('customers', CustomerController::class)->middleware(['auth']);

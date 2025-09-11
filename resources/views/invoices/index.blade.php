@@ -6,7 +6,7 @@
     <div class="py-6 max-w-5xl mx-auto">
         <a href="{{ route('invoices.create') }}" class="btn btn-primary mb-4">+ Add Invoice</a>
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success mb-4">{{ session('success') }}</div>
         @endif
 
@@ -31,15 +31,21 @@
                         <td class="p-2 border">{{ ucfirst($invoice->status) }}</td>
                         <td class="p-2 border">
                             <a href="{{ route('invoices.edit', $invoice) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('invoices.destroy', $invoice) }}" method="POST" class="inline-block">
+                            <form action="{{ route('invoices.destroy', $invoice) }}" method="POST"
+                                class="inline-block">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"
                                     onclick="return confirm('Delete this invoice?')">Delete</button>
                             </form>
+                            @if ($invoice->status == 'pending')
+                                <a href="{{ route('invoice.checkout', $invoice->id) }}" class="btn btn-success btn-sm">Pay</a>
+                            @endif
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="p-4 text-center">No invoices found.</td></tr>
+                    <tr>
+                        <td colspan="6" class="p-4 text-center">No invoices found.</td>
+                    </tr>
                 @endforelse
             </tbody>
         </table>
