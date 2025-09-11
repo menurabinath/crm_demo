@@ -22,4 +22,8 @@ class Invoice extends Model
     {
         return $this->belongsTo(Proposal::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

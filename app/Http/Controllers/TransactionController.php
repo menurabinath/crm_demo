@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
     public function index()
     {
-        // For now, just show a blank page or a simple message
-        return view('transactions.index');
+        // Eager load related invoice and customer
+        $transactions = Transaction::with('invoice.customer')->get();
+
+        return view('transactions.index', compact('transactions'));
     }
 }
