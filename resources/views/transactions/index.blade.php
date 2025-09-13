@@ -15,34 +15,40 @@
                     </div>
                 @endif
 
-                <table class="table-auto w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr class="bg-gray-100">
-                            <th class="border px-4 py-2">ID</th>
-                            <th class="border px-4 py-2">Invoice</th>
-                            <th class="border px-4 py-2">Customer</th>
-                            <th class="border px-4 py-2">Amount</th>
-                            <th class="border px-4 py-2">Status</th>
-                            <th class="border px-4 py-2">Paid At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($transactions as $transaction)
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow">
+                        <thead class="bg-gray-100">
                             <tr>
-                                <td class="border px-4 py-2">{{ $transaction->id }}</td>
-                                <td class="border px-4 py-2">#{{ $transaction->invoice->id }}</td>
-                                <td class="border px-4 py-2">{{ $transaction->invoice->customer->name }}</td>
-                                <td class="border px-4 py-2">${{ $transaction->amount }}</td>
-                                <td class="border px-4 py-2">{{ ucfirst($transaction->status) }}</td>
-                                <td class="border px-4 py-2">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">ID</th>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">Invoice</th>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">Customer</th>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">Amount</th>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">Status</th>
+                                <th class="py-3 px-4 text-left font-semibold text-gray-700">Paid At</th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="p-4 text-center">No transactions found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @forelse($transactions as $transaction)
+                                <tr class="border-b hover:bg-gray-50">
+                                    <td class="py-2 px-4">{{ $transaction->id }}</td>
+                                    <td class="py-2 px-4">#{{ $transaction->invoice->id }}</td>
+                                    <td class="py-2 px-4">{{ $transaction->invoice->customer->name }}</td>
+                                    <td class="py-2 px-4">${{ $transaction->amount }}</td>
+                                    <td class="py-2 px-4">
+                                        <span class="inline-block px-2 py-1 rounded text-xs font-bold bg-gray-200 text-gray-700">
+                                            {{ ucfirst($transaction->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="py-2 px-4">{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="p-4 text-center">No transactions found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>

@@ -8,19 +8,19 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form action="{{ route('customers.store') }}" method="POST">
+                <form action="{{ route('customers.store') }}" method="POST" class="space-y-4">
                     @csrf
-                    <input type="text" name="name" placeholder="Name" class="form-control mb-2">
-                    <input type="email" name="email" placeholder="Email" class="form-control mb-2">
-                    <input type="text" name="company" placeholder="Company" class="form-control mb-2">
-                    <input type="text" name="phone" placeholder="Phone" class="form-control mb-2">
-                    <textarea name="address" placeholder="Address" class="form-control mb-2"></textarea>
-                    <select name="status" class="form-control mb-2">
+                    <input type="text" name="name" placeholder="Name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+                    <input type="email" name="email" placeholder="Email" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+                    <input type="text" name="company" placeholder="Company" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+                    <input type="text" name="phone" placeholder="Phone" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+                    <textarea name="address" placeholder="Address" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"></textarea>
+                    <select name="status" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
-                    <textarea name="notes" placeholder="Notes" class="form-control mb-2"></textarea>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <textarea name="notes" placeholder="Notes" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"></textarea>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded shadow transition">Save</button>
                 </form>
             </div>
         </div>
